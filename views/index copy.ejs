@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Video</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 1rem;
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        select,
+        textarea,
+        input[type="text"],
+        input[type="file"],
+        button {
+            width: 100%;
+            font-size: 1rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        button:hover {
+            background-color: #004999;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        /* Loader styles */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .spinner {
+            border: 6px solid #ddd;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .loading-text {
+            font-size: 1.1rem;
+            color: #444;
+        }
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h2>📽️ Create Your Captioned Video</h2>
+    <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+        <label>Video Title:
+            <input type="text" name="title" placeholder="Enter the title of your video...">
+            <div id="title-error" class="error"></div>
+        </label>
+        <label>Video Orientation:
+            <select name="orientation" required>
+                <option value="portrait" selected>Portrait</option>
+                <option value="landscape">Landscape</option>
+            </select>
+        </label>
+        <div style="margin-top: 10px;">
+            <label for="music_default">1. Add Background Music for Images & Text and make Video Clip</label>
+            <input type="radio" id="music_default" name="music_option" value="default" checked>
+
+            <label for="music_ai">2. Generate AI audio for Images & Text and make VideoClip</label>
+            <input type="radio" id="music_ai" name="music_option" value="ai">
+
+            <label for="transform_merge">3. Transform & Merge Video Clips with original audio</label>
+            <input type="radio" id="transform_merge" name="music_option" value="transform_merge">
+
+            <label for="transform_add_music">4. Transform & Merge Video Clips and Add Background Music</label>
+            <input type="radio" id="transform_add_music" name="music_option" value="transform_add_music">
+
+            <label for="merge_only">5. Merge Video Clips Only (no transformation)</label>
+            <input type="radio" id="merge_only" name="music_option" value="merge_only">
+        </div>
+        <label>Caption Text:
+            <textarea name="caption" rows="8" placeholder="Enter your caption here..."></textarea>
+            <div id="caption-error" class="error"></div>
+        </label>
+        <label>Select Images or Videos (2–10):
+            <input type="file" name="media" accept="image/jpeg,image/png,image/webp" multiple required id="media-input">
+            <div id="file-error" class="error"></div>
+        </label>
+        <button type="submit">🎬 Create Video</button>
+    </form>
+    <div class="footer">Optimized for mobile. Upload, caption, and render videos easily.</div>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Rendering your video, please wait...</div>
+    </div>
+    <script>
+        $('#upload-form').on('submit', function (event) {
+            let isValid = true;
+            const title = $('input[name="title"]').val().trim();
+            const caption = $('textarea[name="caption"]').val().trim();
+            const musicOption = $('input[name="music_option"]:checked').val();
+            const files = $('input[name="media"]')[0].files;
+
+            // Remove title and caption required validation
+            // if (title === '') {
+            //     $('#title-error').text('Title cannot be blank.');
+            //     isValid = false;
+            // } else {
+            //     $('#title-error').text('');
+            // }
+
+            // if (caption === '') {
+            //     $('#caption-error').text('Caption text cannot be blank.');
+            //     isValid = false;
+            // } else {
+            //     $('#caption-error').text('');
+            // }
+
+            if (musicOption === 'ai' || musicOption === 'default') {
+                const hasImages = Array.from(files).some(file => file.type.startsWith('image/'));
+                if (!hasImages) {
+                    $('#file-error').text('At least one image file must be selected.');
+                    isValid = false;
+                } else {
+                    $('#file-error').text('');
+                }
+            } else if (musicOption === 'transform_merge' || musicOption === 'transform_add_music' || musicOption === 'merge_only') {
+                const hasVideos = Array.from(files).some(file => file.type === 'video/mp4');
+                if (!hasVideos) {
+                    $('#file-error').text('At least one video clip (.mp4) must be selected.');
+                    isValid = false;
+                } else {
+                    $('#file-error').text('');
+                }
+            } else {
+                const hasFiles = files.length > 0;
+                if (!hasFiles) {
+                    $('#file-error').text('At least one file must be selected.');
+                    isValid = false;
+                } else {
+                    $('#file-error').text('');
+                }
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            } else {
+                $('#loading-overlay').fadeIn();
+            }
+        });
+
+        $('input[name="music_option"]').change(function() {
+            const musicOption = $(this).val();
+            const fileInput = $('input[name="media"]');
+            if (musicOption === 'ai' || musicOption === 'default') {
+                fileInput.attr('accept', 'image/jpeg,image/png,image/webp');
+            } else if (musicOption === 'transform_merge' || musicOption === 'transform_add_music' || musicOption === 'merge_only') {
+                fileInput.attr('accept', 'video/mp4');
+            }
+        });
+    </script>
+</body>
+</html>

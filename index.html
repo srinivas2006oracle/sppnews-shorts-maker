@@ -1,0 +1,1082 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Z P Boys High School - Cheepurupalli</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    /* Responsive Layout */
+@media (max-width: 768px) {
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+  .photo-block {
+    position: static !important;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: url('images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    header img {
+      max-width: 120px;
+      height: auto;
+    }
+    header h1 {
+      margin: 10px 0 5px;
+      font-size: 24px;
+      color: #222;
+    }
+    header p {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
+    nav {
+      background: #004d99;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .section {
+      display: none;
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.95);
+      margin: 20px auto;
+      max-width: 900px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section.active {
+      display: block;
+    }
+    .section h2 {
+      color: #004d99;
+      margin-bottom: 10px;
+    }
+    style
+    .section h2 {
+    color: #004d99;
+    margin-bottom: 10px;
+  }
+
+  .site-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #004d99;
+    color: white;
+    font-size: 14px;
+    margin-top: 40px;
+    border-top: 1px solid #ccc;
+  }
+  .donor-button {
+  display: inline-block;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  border: 2px solid #c7079d;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #d009eb, #5f08a7);
+  background-size: 200% auto;
+  transition: background-position 0.4s ease, transform 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 152, 0, 0.6);
+  animation: pulse 2s infinite;
+}
+
+.donor-button:hover {
+  background-position: right center;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(20, 6, 223, 0.8);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 15px rgba(4, 134, 156, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(94, 4, 153, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(114, 2, 54, 0.6);
+  }
+}
+.achievement-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 700px;
+  animation: fadeInUp 1s ease-in-out;
+  transition: transform 0.3s;
+}
+.achievement-card:hover {
+  transform: translateY(-5px);
+}
+.achievement-card img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.achievement-card h3 {
+  color: #004080;
+  margin-bottom: 15px;
+}
+.achievement-card p,
+.achievement-card ul {
+  font-size: 18px;
+  color: #333;
+}
+.achievement-card ul {
+  list-style: none;
+  padding: 0;
+}
+.achievement-card li::before {
+  content: '⭐ ';
+  color: #ff9900;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+ <!-- Top Header Block -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; flex-wrap: wrap; background-color: rgba(255,255,255,0.9); border-bottom: 1px solid #ccc;">
+
+  <!-- LEFT SECTION -->
+  <div style="display: flex; gap: 20px;">
+    <!-- CM -->
+    <div style="text-align: center; font-size: 12px; width: 180px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\cm.jpg" alt="CM" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong>Sri. N. Chandra Babu Naidu</strong><br />
+        Chief Minister<br />A.P. Govt
+      </div>
+    </div>
+
+    <!-- HRD Minister -->
+    <div style="text-align: center; font-size: 12px; width: 150px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\lokesh.jpg" alt="Minister" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong>Sri. Nara Lokesh</strong><br />
+        Minister, HRD & IT<br />A.P. Govt
+      </div>
+    </div>
+
+    <!-- Collector -->
+    <div style="text-align: center; font-size: 12px; width: 150px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\collector.jpg" alt="Collector" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong>Dr. B.R. Ambedkar, IAS</strong><br />
+        District Collector<br />Vizianagaram
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER SECTION -->
+  <div style="text-align: center; flex-grow: 1;">
+    <img src="images/logo.jpg" alt="School Logo" style="max-width: 100px;" />
+    <h1 style="margin: 8px 0 4px; font-size: 20px; color: #004d99;">Z P BOYS HIGH SCHOOL - CHEEPURUPALLI</h1>
+    <p style="font-size: 14px; font-style: italic; color: #555;">Sowing Seeds of Knowledge</p>
+  </div>
+
+  <!-- RIGHT SECTION -->
+  <div style="display: flex; gap: 20px;">
+    <!-- DEO -->
+    <div style="text-align: center; font-size: 12px; width: 150px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\deo.jpeg" alt="DEO" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong>Sri. U.Manikyam Naidu</strong><br />
+        District Educational Officer <br /> Vizianagaram 
+      </div>
+    </div>
+
+    <!-- Dy.E.O -->
+    <div style="text-align: center; font-size: 12px; width: 150px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\dyeo.jpg" alt="DyEO" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong style="white-space: nowrap">Sri K.Venkata Ramana</strong><br />
+        Deputy Educational Officer<br />Cheepurupalli Division <br />
+        Vizianagaram District
+      </div>
+    </div>
+    <!-- DEO -->
+    <div style="text-align: center; font-size: 12px; width: 180px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images\hm.jpg" alt="DEO" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px;" />
+      <div style="margin-top: 6px;">
+        <strong>Smt D.Uma Maheswari</strong><br />
+        Head Master<br />Z P BOYS HIGH SCHOOL <br />Cheepurupalli
+      </div>
+    </div>
+  </div>
+</div>
+  <marquee behavior="scroll" direction="left" scrollamount="5" style="
+  color: #fff;
+  font-weight: bold;
+  background: #c00371;
+  padding: 12px;
+  font-size: 18px;
+  animation: blink 1.5s linear infinite;
+">
+  WELCOME TO BOYS HIGH SCHOOL CHEEPURUPALLI
+</marquee>
+
+<style>
+.dept-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.dept-buttons button {
+  background-color: #004d99;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.dept-buttons button:hover {
+  background-color: #007acc;
+  transform: scale(1.05);
+}
+
+.faculty-group {
+  display: none;
+  animation: fadeEffect 0.5s ease-in-out;
+}
+
+.faculty-group.active {
+  display: block;
+}
+
+.faculty-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #f4f8fb;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.faculty-card img {
+  width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #004d99;
+}
+
+.faculty-card h3 {
+  margin: 0 0 8px;
+  color: #004d99;
+}
+
+@media (max-width: 600px) {
+  .faculty-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+  .slideshow-container {
+  max-width: 800px;
+  position: relative;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.slide {
+  display: none;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.fade {
+  animation: fadeEffect 1.5s;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .donors-table th, .donors-table td {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+.donors-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .donors-table th, .donors-table td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    .donors-table th {
+      background-color: #3498db;
+      color: white;
+      font-size: 1.1em;
+    }
+
+    .donors-table tr:nth-child(even) {
+      background-color: #f2f9ff;
+    }
+
+    .donors-table tr:hover {
+      background-color: #d6f0ff;
+      transition: background-color 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .donors-table th, .donors-table td {
+        font-size: 0.9em;
+        padding: 10px;
+      }
+    }
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+  <nav>
+  <a onclick="showSection('about')">About</a>
+  <a onclick="showSection('faculty')">Faculty</a>
+  <a onclick="showSection('Achievements')">Achievements</a>
+  <a onclick="showSection('alumni')">Alumni</a>
+  <a onclick="showSection('donors')">Donors</a>
+  <a onclick="showSection('AILab')">AI Skills Lab</a>
+  <a onclick="showSection('studentcorner')">Student Corner</a>
+  <a onclick="showSection('contact')">Contact</a>
+</nav>
+
+
+  <section id="about" class="section active" style="background: linear-gradient(135deg, #e6f0ff, #ffffff);">
+  <h2 style="text-align:center; font-size: 28px; color: #003366;">About Our School</h2>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: flex-start; margin-top: 30px;">
+    <!-- Image Block -->
+    <div style="flex: 1; min-width: 300px; max-width: 400px;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/schoolfront.jpg" 
+           alt="School Front" 
+           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" />
+    </div>
+
+    <!-- Text Block -->
+    <div style="flex: 2; min-width: 300px;">
+      <div style="background: #fdfdfd; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+        <p style="font-size: 16px; line-height: 1.6;">
+          <strong>Z P Boys High School, Cheepurupalli</strong> was established in <strong>1947</strong>, the year of Indian independence. It has since grown into a beacon of education and empowerment for rural youth.
+        </p>
+      </div>
+      <div style="background: #fdfdfd; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+        <p style="font-size: 16px; line-height: 1.6;">
+          Thousands of students have walked these corridors, gaining not only academic knowledge but also moral values, leadership qualities, and life skills.
+        </p>
+      </div>
+      <div style="background: #fdfdfd; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <p style="font-size: 16px; line-height: 1.6;">
+          We continue to uphold our rich legacy and strive to shape the future with innovation, discipline, and a strong commitment to excellence.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section id="faculty" class="section">
+  <h2>Our Faculty</h2>
+
+ <div class="dept-buttons">
+  <button onclick="showDept('telugu')">TELUGU</button>
+  <button onclick="showDept('hindi')">HINDI</button>
+  <button onclick="showDept('english')">ENGLISH</button>
+  <button onclick="showDept('maths')">MATHS</button>
+  <button onclick="showDept('ps')">PHYSICAL SCIENCE</button>
+  <button onclick="showDept('bs')">BIOLOGICAL SCIENCE</button>
+  <button onclick="showDept('social')">SOCIAL STUDIES</button>
+  <button onclick="showDept('pe')">PHYSICAL EDUCATION</button>
+  <button onclick="showDept('spl edn')">SPECIAL EDUCATION</button>
+  <button onclick="showDept('nonteaching')">NON TEACHING</button>
+</div>
+
+<div class="faculty-container">
+  <!-- TELUGU -->
+  <div class="faculty-group" id="telugu">
+  <div class="faculty-card">
+    <img src="images/teacher1.jpg" alt="Faculty Member 1" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 1</h3>
+      <p><strong>Desg:</strong> School Assistant (Telugu)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher2.jpg" alt="Faculty Member 2" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 2</h3>
+      <p><strong>Desg:</strong> School Assistant (Telugu)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+  </div>
+  <div class="faculty-card">
+    <img src="images/teacher3.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 3</h3>
+      <p><strong>Desg:</strong> School Assistant (Telugu)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/mjr.jpeg" alt="Faculty Member 4" />
+    <div>
+      <h3>Sri M.Jagadeeswara Rao </h3>
+      <p><strong>Desg:</strong> School Assistant (Telugu)</p>
+      <p><strong>Qualification:</strong> B.A. T.P.T.,</p>
+      <p><strong>Teaching Experience:</strong> 23 years</p>
+    </div>
+  </div>
+</div>
+   <!-- HINDI -->
+<div class="faculty-group" id="hindi">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/me.jpg" alt="Hindi Faculty" />
+    <div>
+      <h3>Sri. A.V.R.D.Prasad</h3>
+      <p><strong>Desg:</strong> School Assistant (Hindi)</p>
+      <p><strong>Qualification:</strong> M.A(Hin)., H.P.T.,</p>
+      <p><strong>Teaching Experience:</strong> 23 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/gps.jpg" alt="Hindi Faculty" />
+    <div>
+      <h3>Smt. G.P.S.Lakshmi</h3>
+      <p><strong>Desg:</strong> School Assistant (Hindi)</p>
+      <p><strong>Qualification:</strong> M.A(Hin)., H.P.T.,</p>
+      <p><strong>Teaching Experience:</strong> 23 years</p>
+    </div>
+  </div>
+  </div>
+  <!-- ENGLISH -->
+  <div class="faculty-group" id="english">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/kml.jpeg" alt="Faculty Member 1" />
+    <div>
+      <h3>Smt K.Mary Lavanyavathi</h3>
+      <p><strong>Desg:</strong> School Assistant (English)</p>
+      <p><strong>Qualification:</strong> M.A(Eng) B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/mrn.jpeg"  alt="Faculty Member 2" />
+    <div>
+      <h3>Sri M.Ramana</h3>
+      <p><strong>Desg:</strong> School Assistant (English)</p>
+      <p><strong>Qualification:</strong> M.A. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 13 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/kpv.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Smt. K.Padmavathi</h3>
+      <p><strong>Desg:</strong> School Assistant (English)</p>
+      <p><strong>Qualification:</strong> M.A. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher4.jpg" alt="Faculty Member 4" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 4</h3>
+      <p><strong>Desg:</strong> School Assistant (English)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+</div>
+</div>
+<!-- MATHS -->
+  <div class="faculty-group" id="maths">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/anr.jpeg" alt="Faculty Member 1" />
+    <div>
+      <h3> Smt.  M.Anuradha</h3>
+      <p><strong>Desg:</strong> School Assistant (Maths)</p>
+      <p><strong>Qualification:</strong> B.Sc. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 28 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+     <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/chanti.jpeg" alt="Faculty Member 2" />
+    <div>
+      <h3>Sri N.Parvateesam </h3>
+      <p><strong>Desg:</strong> School Assistant (Maths)</p>
+      <p><strong>Qualification:</strong> B.Sc. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 27 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+     <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/msr.jpeg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri M.Srinivasa Rao </h3>
+      <p><strong>Desg:</strong> School Assistant (Maths)</p>
+      <p><strong>Qualification:</strong> M.Sc. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 27 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+   <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/vlp.jpeg" alt="Faculty Member 4" />
+    <div>
+      <h3>Smt V.L.Padmavathi</h3>
+      <p><strong>Desg:</strong> School Assistant (Maths)</p>
+      <p><strong>Qualification:</strong> M.A(Edn). B.A(Maths)</p>
+      <p><strong>Teaching Experience:</strong> 27 years</p>
+    </div>
+</div>
+<div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/msj.jpeg"alt="Faculty Member 5" />
+    <div>
+      <h3>Smt M.Sujatha </h3>
+      <p><strong>Desg:</strong> School Assistant (Maths)</p>
+      <p><strong>Qualification:</strong> M.Sc. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 16 years</p>
+    </div>
+</div>
+</div>
+<!-- PS -->
+  <div class="faculty-group" id="ps">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/ps1.jpg" alt="Faculty Member 1" />
+    <div>
+      <h3>Sri. G.Venkata Ramamohana Rao  </h3>
+      <p><strong>Desg:</strong> School Assistant (PS)</p>
+      <p><strong>Qualification:</strong> M.Sc, M.A, B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 30 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/par.jpg" alt="Faculty Member 2" />
+    <div>
+      <h3>Smt. P.Anuradha </h3>
+      <p><strong>Desg:</strong> School Assistant (PS)</p>
+      <p><strong>Qualification:</strong> M.Sc.(Phy) B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 16 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/bsr.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Smt. B.Saraswathi</h3>
+      <p><strong>Desg:</strong> School Assistant (PS)</p>
+      <p><strong>Qualification:</strong> M.Sc(Phy). M.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 22 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher4.jpg" alt="Faculty Member 4" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 4</h3>
+      <p><strong>Desg:</strong> School Assistant (PS)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+</div> 
+</div>
+<!-- BS -->
+  <div class="faculty-group" id="bs">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/mkr.jpg" alt="Faculty Member 1" />
+    <div>
+      <h3>Sri M.Krishnarao </h3>
+      <p><strong>Desg:</strong> School Assistant (Bio Sci)</p>
+      <p><strong>Qualification:</strong> M.Sc(Botany,Life Science), M.A(Psychology,Philosophy,Telugu),              M.Ed, PGDGC, PGDYC, PGDCL, PGDCA, PGDSK & Ph.D., </p>
+      <p><strong>Teaching Experience:</strong> 30 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher2.jpg" alt="Faculty Member 2" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 2</h3>
+      <p><strong>Desg:</strong> School Assistant (Bio Sc)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher3.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 3</h3>
+      <p><strong>Desg:</strong> School Assistant (Bio Sc)</p>
+      <p><strong>Qualification:</strong> Qualification details</p>
+      <p><strong>Teaching Experience:</strong> X years</p>
+    </div>
+  </div>
+</div>
+</div>
+<!-- SOCIAL -->
+  <div class="faculty-group" id="social">
+  <div class="faculty-card">
+    <img src="images/teacher1.jpg" alt="Faculty Member 1" />
+    <div>
+      <h3>Sri M.Golla </h3>
+      <p><strong>Desg:</strong> School Assistant (social)</p>
+      <p><strong>Qualification:</strong> M.A. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/ssj.jpg" alt="Faculty Member 2" />
+    <div>
+      <h3>Smt S.Sujatha </h3>
+      <p><strong>Desg:</strong> School Assistant (social)</p>
+      <p><strong>Qualification:</strong> M.A. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/rcb.jpeg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri R.Chitti Babu </h3>
+      <p><strong>Desg:</strong> School Assistant (social)</p>
+      <p><strong>Qualification:</strong> M.A. B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/bjs.jpg" alt="Faculty Member 4" />
+    <div>
+      <h3>Smt. B.J.S.Kumari</h3>
+      <p><strong>Desg:</strong> School Assistant (social)</p>
+      <p><strong>Qualification:</strong> B.A B.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 36 years</p>
+    </div>
+</div>
+</div>
+<!--Physical Education -->
+  <div class="faculty-group" id="pe">
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/gap.jpeg" alt="Faculty Member 1" />
+    <div>
+      <h3>Sri G.Appa Rao</h3>
+      <p><strong>Desg:</strong> School Assistant (PE)</p>
+      <p><strong>Qualification:</strong> B.A. B.P.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 27 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/swrp.jpeg" alt="Faculty Member 2" />
+    <div>
+      <h3>Sri P.C.Swaroop </h3>
+      <p><strong>Desg:</strong> School Assistant (PE)</p>
+      <p><strong>Qualification:</strong> </p>B.Sc., M.P.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 18 years</p>
+    </div>
+  </div>
+
+  <div class="faculty-card">
+     <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/kmd.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri K.Muralidhara Rao </h3>
+      <p><strong>Desg:</strong> School Assistant (PE)</p>
+      <p><strong>Qualification:</strong> M.A. B.P.Ed.,</p>
+      <p><strong>Teaching Experience:</strong> 16 years</p>
+    </div>
+  </div>
+</div>
+</div>
+<!-- SPECIAL EDUCATION -->
+  <div class="faculty-group" id="spl edn">
+    <div class="faculty-card">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/images/faculty/sped.jpg" alt="Specical Education Faculty" />
+      <div>
+        <h3>Sri. T.Rambabu</h3>
+        <p><strong>Desg:</strong> School Assistant (Spl. Edn)</p>
+        <p><strong>Qualification:</strong> M.Sc(Psy)., M.A(His,Soc,Eco,Eng,Edn)., B.Ed.,(Spl Edn)</p>
+        <p><strong>Teaching Experience:</strong> 5 years</p>
+      </div>
+    </div>
+  </div>
+  <!-- NON TEACHING -->
+ <div class="faculty-group" id="nonteaching">
+    <div class="faculty-card">
+    <img src="images/teacher2.jpg" alt="Faculty Member 2" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 2</h3>
+      <p><strong>Desg:</strong> Librarian</p>
+      
+    </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher3.jpg" alt="Faculty Member 3" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 3</h3>
+      <p><strong>Desg:</strong> Junior Assistant</p>
+          </div>
+  </div>
+
+  <div class="faculty-card">
+    <img src="images/teacher4.jpg" alt="Faculty Member 4" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 4</h3>
+      <p><strong>Desg:</strong> Record Assistant</p>
+      
+    </div>
+</div>
+<div class="faculty-card">
+    <img src="images/teacher4.jpg" alt="Faculty Member 5" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 5</h3>
+      <p><strong>Desg:</strong> Lab Assistant</p>
+      
+    </div>
+</div>
+<div class="faculty-card">
+    <img src="images/teacher4.jpg" alt="Faculty Member 5" />
+    <div>
+      <h3>Sri/Smt. Teacher Name 5</h3>
+      <p><strong>Desg:</strong> Office Sub-ordinate</p>
+     
+    </div>
+</div>
+</div>
+
+</section>
+
+  <section id="Achievements" class="section">
+  <h2 style="text-align:center; color:#002147; font-size: 32px; margin-bottom: 20px;">🏆 Achievements – 2024–25 Academic Year</h2>
+  <p style="text-align:center; font-size:18px; color:#555; margin-bottom: 40px;">Celebrating Excellence at Z P Boys High School, Cheepurupalli</p>
+
+  <div class="achievement-card">
+    <h3>🌟 SSC Achievement – Shining Star Award</h3>
+    <p><strong>J A S Srividya</strong> secured <strong>2nd Rank</strong> in the <strong>Open Category</strong> under <strong>Cheepurupalli Mandal</strong>.</p>
+    <p>She has been honored with the <strong>AP Govt. Shining Star Award</strong> for her stellar SSC performance.</p>
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/sstar.jpg" alt="Shining Star Award - Srividya">
+  </div>
+
+  <div class="achievement-card">
+    <h3>🎓 NMMS Scholarship Winners (2024–25)</h3>
+    <p>We proudly congratulate the following students for winning the <strong>National Means-cum-Merit Scholarship (NMMS)</strong>:</p>
+    <ul>
+      <li>K. Pradeep</li>
+      <li>G. Aditya</li>
+      <li>P. Jagan</li>
+    </ul>
+    <p>Hearty congratulations from the HM & Staff of <strong>Z P Boys High School, Cheepurupalli</strong></p>
+    <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/nmms.jpg" alt="NMMS Winners 2024-25">
+  </div>
+</section>
+  </section>
+ <section id="alumni" class="section">
+  <h2>Alumni</h2>
+  <p>Select an academic year to view alumni details:</p>
+  <select id="alumniYearDropdown" onchange="goToAlumniYear(this)">
+    <option value="">-- Select Academic Year --</option>
+  </select>
+
+  <p style="margin-top: 20px;">
+    We take pride in our successful alumni who have contributed to society in various fields. This section will highlight their achievements.
+  </p>
+
+  <!-- Testimonials Section -->
+  <div style="margin-top: 40px;">
+    <h3 style="color: #004d99; text-align: center;">Alumni Testimonials</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+      <!-- Alumni 1 -->
+      <div style="max-width: 300px; background: #f4f8fb; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; text-align: center;">
+        <img src="images/alumni1.jpg" alt="Alumni 1" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #004d99; margin-bottom: 10px;">
+        <h4 style="color: #004d99;">Dr. Anil Kumar</h4>
+        <p style="font-size: 14px; color: #555;">Cardiologist, Hyderabad</p>
+        <p style="font-size: 14px; line-height: 1.5; color: #333;">
+          "This school laid the foundation for my success. The values and knowledge I received here shaped my life and career."
+        </p>
+      </div>
+
+      <!-- Alumni 2 -->
+      <div style="max-width: 300px; background: #f4f8fb; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; text-align: center;">
+        <img src="images/alumni2.jpg" alt="Alumni 2" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #004d99; margin-bottom: 10px;">
+        <h4 style="color: #004d99;">Smt. Keerthi Reddy</h4>
+        <p style="font-size: 14px; color: #555;">IAS Officer, Govt. of India</p>
+        <p style="font-size: 14px; line-height: 1.5; color: #333;">
+          "ZP Boys High School gave me the courage to dream big. I’m forever thankful to the dedicated teachers and my time here."
+        </p>
+      </div>
+
+      <!-- Alumni 3 -->
+      <div style="max-width: 300px; background: #f4f8fb; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; text-align: center;">
+        <img src="images/alumni3.jpg" alt="Alumni 3" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #004d99; margin-bottom: 10px;">
+        <h4 style="color: #004d99;">Shri. Naveen Raju</h4>
+        <p style="font-size: 14px; color: #555;">Entrepreneur, Bangalore</p>
+        <p style="font-size: 14px; line-height: 1.5; color: #333;">
+          "The discipline, dedication, and sense of purpose I found here are the cornerstones of my journey in the business world."
+        </p>
+      </div>
+    </section>
+  <!-- DONORS SECTION -->
+    <section id="donors" class="section">
+  <h2 style="text-align:center; font-size: 28px; color: #003366;">Donors</h2>
+  <p>We sincerely thank the following donors for their generous contributions to the development of our school.</p>
+  <table class="donors-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contribution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Sri Ch. Ramanadham</td><td>₹1,00,000 [Water Plant]</td></tr>
+      <tr><td>Sri S. Lakshmana Rao, B.Ed Teacher</td><td>₹50,000</td></tr>
+      <tr><td>Sri S. Lakshmana Rao & Friends (1968-69 SSC Batch)</td><td>₹60,000</td></tr>
+      <tr><td>Sri B. Narasimha Murthy & Savitri</td><td>₹25,000</td></tr>
+      <tr><td>Sri M.S.N. Raju, Retd. HM</td><td>₹25,000</td></tr>
+      <tr><td>1993-94 SSC Batch</td><td>₹25,000</td></tr>
+      <tr><td>Sri A.J.R. Murthy & Smt. Chittamma (MMRL)</td><td>₹20,000</td></tr>
+      <tr><td>Sri T. Janardhana Rao (MMRL)</td><td>₹10,000</td></tr>
+      <tr><td>Sri N. Jogulamba (MMRL)</td><td>₹10,000</td></tr>
+      <tr><td>Sri M. Laksmi Kantamma & Sanyasayya (MMRL)</td><td>₹10,000</td></tr>
+      <tr><td>Sri M. Manmadha Rao, Rtd. Teacher</td><td>₹10,000</td></tr>
+      <tr><td>Sri T. Srirama Murthy, Retd. HM</td><td>₹10,000</td></tr>
+      <tr><td>Sri K. Anandarau (K. Viswanadham MMRL)</td><td>₹5,000</td></tr>
+      <tr><td>Sri S.K. Sarvaji (MMRL)</td><td>₹5,000</td></tr>
+      <tr><td>Sri T. Vijaya Bhaskar (MMRL)</td><td>₹5,000</td></tr>
+      <tr><td>Sri A. Lakshmana Rao</td><td>₹5,000</td></tr>
+      <tr><td>Sri Ch. Murali Mohana Rao (MMRL)</td><td>₹4,000</td></tr>
+      <tr><td>Sri S.K. Sarvaji</td><td>Donated 55 Desk Benches</td></tr>
+      <tr><td>S.B.I., C.P.P. Branch</td><td>Donated Computer & Fans</td></tr>
+      <tr><td>1991–92 SSC Batch</td><td>Donated LED TV & Gandhi Statue</td></tr>
+      <tr><td>Sri M.V.S.N. Raju</td><td>Donated Saraswathi Devi Statue</td></tr>
+      <tr><td>1971–72 SSC Batch</td><td>Sponsored Auditorium</td></tr>
+      <tr><td>Sri V. Mohana Rao, Rtd. Teacher</td><td>Donated Vivekananda Statue, Megaphone</td></tr>
+      <tr><td>Sri Y. Nageswaramma, Rtd. Teacher</td><td>₹10,000 [Wash Basin]</td></tr>
+      <tr><td>1994–95 SSC Batch</td><td>Donated Entrance Name Board Arch</td></tr>
+      <tr><td>1995–96 SSC Batch</td><td>Donated Leaders’ Photos (Paintings)</td></tr>
+      <tr><td>Sri R. Durga Rao, Old Student</td><td>Donated 70 Litres Colour Paint</td></tr>
+      <tr><td>Sri T. Krupa Prasad</td><td>Donated 7 Water Cans</td></tr>
+      <tr><td>Army Employees (Pramakrishna & Friends, MMRL) and</td></tr>
+      <tr><td>Sri K. Tavitraju (Pundariya) & Sri S. Ramesh Naidu, SSA Staff</td><td>Donated Flag Pole, Platform & Railing</td></tr>
+    </tbody>
+  </table>
+  </section>
+  <!-- AI Skills Lab Section -->
+  <section id="AILab" class="section">
+  <h2 style="text-align:center; font-size: 28px; color: #003366;">AI Skills Lab</h2>
+
+  <!-- Intel & Lab Branding -->
+  <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px;">
+    
+    <!-- Intel Logo -->
+    <div style="flex: 0 0 auto; text-align: center;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/intellogo.jpg" 
+           alt="Intel Logo" 
+           style="height: 60px;" />
+      <p style="font-size: 13px; margin-top: 5px; color: #555;">In Collaboration with Intel India</p>
+    </div>
+
+    <!-- Lab Photo -->
+    <div style="flex: 0 0 auto;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ailab.jpg" 
+           alt="AI Lab Banner" 
+           style="max-width: 300px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+    </div>
+  </div>
+
+  <!-- Description -->
+  <p style="text-align: center; font-size: 16px; color: #333; line-height: 1.6;">
+    The <strong>AI Skills Lab</strong> was inaugurated at our school on <strong>2nd March, 2024</strong>, in association with <strong>Intel India</strong>. 
+    This initiative empowers students with 21st-century skills in Artificial Intelligence, Machine Learning, and responsible AI practices.
+  </p>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slide fade" style="display: block;">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ai1.JPG" alt="AI Lab Image 1">
+    </div>
+    <div class="slide fade">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ai2.JPG" alt="AI Lab Image 2">
+    </div>
+    <div class="slide fade">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ai3.JPG" alt="AI Lab Image 3">
+    </div>
+    <div class="slide fade">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ai4.JPG" alt="AI Lab Image 4">
+    </div>
+    <div class="slide fade">
+      <img src="https://raw.githubusercontent.com/avrdprasad/BoysHighSchool/main/images/ai5.JPG" alt="AI Lab Image 5">
+    </div>
+  </div>
+</section>
+<section id="studentcorner" class="section">
+  <h2>Student Corner</h2>
+  <p>Explore learning resources, project work, student art, and much more!</p>
+  <ul>
+    <li><a href="notes.html">Subject Notes</a></li>
+    <li><a href="projects.html">Project Work Showcase</a></li>
+    <li><a href="art.html">Art & Creativity</a></li>
+    <li><a href="quiz.html">Quiz & Activities</a></li>
+  </ul>
+</section>
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <p> 📍 Church Road, Beside TTD Kalyana Mandapam, Main Road, Cheepurupalli - 535128, Vizianagaram District, AP<br>
+        📞 9640626306<br>
+        📧 avrdprasad@gmail.com</p>
+   <!-- Google Map -->
+  <iframe 
+ src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3787.803436099592!2d83.56677677586387!3d18.31059517555324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3bf5364b4c2b33%3A0x2a3c0afcf1976275!2sGovernment%20Boys%20High%20School!5e0!3m2!1sen!2sin!4v1752517357907!5m2!1sen!2sin" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+ style="border:2px solid #ccc; border-radius: 8px; margin-top: 20px;"
+ title="Z P Boys High School Location Map">
+</iframe>
+  </section>
+<script>
+  function showSection(id) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+  }
+
+  // Populate academic year dropdown dynamically after page loads
+  window.onload = function () {
+    const dropdown = document.getElementById("alumniYearDropdown");
+    for (let year = 2024; year >= 1947; year--) {
+      const option = document.createElement("option");
+      option.value = `${year}-${(year + 1).toString().slice(2)}`;
+      option.text = `${year}-${(year + 1).toString().slice(2)}`;
+      dropdown.appendChild(option);
+    }
+  };
+
+  function goToAlumniYear(select) {
+    const year = select.value;
+    if (year) {
+      window.location.href = "alumni/" + year + ".html";
+    }
+  }
+</script>
+  <script>
+  let slideIndex = 0;
+  showSlides();
+
+  function showSlides() {
+    const slides = document.getElementsByClassName("slide");
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}
+    slides[slideIndex-1].style.display = "block";
+    setTimeout(showSlides, 3000); // Change image every 3 seconds
+  }
+  function showDept(deptId) {
+  const groups = document.querySelectorAll('.faculty-group');
+  groups.forEach(g => g.classList.remove('active'));
+  const selected = document.getElementById(deptId);
+  if (selected) selected.classList.add('active');
+ }
+</script>
+  <div style="text-align:center; margin-top: 40px;">
+  <h3>Support Our School's Growth</h3>
+  <a href="donate.html" class="donor-button">Become a Donor</a>
+</div>
+  <footer style="text-align: center; padding: 20px; background-color: #004d99; color: white;">
+  © 2025 Z P Boys High School, Cheepurupalli. All Rights Reserved.
+</footer>
+ </body>
+</html> 

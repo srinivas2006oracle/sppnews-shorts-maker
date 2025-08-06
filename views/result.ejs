@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>వీడియో ఫలితం</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 1rem;
+      max-width: 500px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-group {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    a.button {
+      background-color: #28a745;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    a.button.secondary {
+      background-color: #007bff;
+    }
+
+    a.button:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎉 మీ వీడియో సిద్ధంగా ఉంది!</h2>
+
+  <video controls src="/video/<%= videoName %>" poster="/public/video-thumbnail.jpg"></video>
+
+  <div class="btn-group">
+    <a href="/video/<%= videoName %>" class="button" download>⬇️ వీడియో డౌన్‌లోడ్ చేయండి</a>
+    <a href="/" class="button secondary">➕ మరో వీడియోను సృష్టించండి</a>
+  </div>
+</body>
+</html>
