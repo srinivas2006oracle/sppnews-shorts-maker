@@ -267,6 +267,8 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
   } else if (musicOption === 'transform_merge') {
     // Option 3: Transform & Merge Video Clips Only
     const videoClipPaths = [];
+    let portraitCount = 0;
+    let lastPortraitPath = null;
     for (let i = 0; i < mediaFiles.length; i++) {
       const file = mediaFiles[i];
       const ext = path.extname(file.originalname).toLowerCase();
@@ -291,7 +293,8 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       }
 
       if (orientation === 'portrait' && isPortrait) {
-        // If chosen orientation is portrait and video is portrait, skip transformation
+        portraitCount++;
+        lastPortraitPath = file.path;
         videoClipPaths.push(file.path);
       } else {
         // Otherwise, apply transformation
@@ -300,7 +303,20 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       }
     }
 
-    if (videoClipPaths.length > 0) {
+    // If only one video and it's portrait, just re-encode to 1080x1920 and output, retain original audio
+    if (videoClipPaths.length === 1 && portraitCount === 1 && orientation === 'portrait') {
+      await new Promise((resolve, reject) => {
+        ffmpeg()
+          .input(lastPortraitPath)
+          .videoCodec('libx264')
+          .audioCodec('aac')
+          .outputOptions(['-vf', 'scale=1080:1920', '-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+          .output(finalVideoPath)
+          .on('end', resolve)
+          .on('error', reject)
+          .run();
+      });
+    } else if (videoClipPaths.length > 0) {
       await mergeVideos(videoClipPaths, finalVideoPath);
     }
   } else if (musicOption === 'transform_add_music') {
@@ -352,7 +368,7 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
             .input(inputPath)
             .videoCodec('libx264')
             .audioCodec('aac')
-            .outputOptions(['-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+            .outputOptions(['-vf', 'scale=1080:1920','-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
             .on('end', resolve)
             .on('error', reject)
             .save(outputPath);
