@@ -213,15 +213,17 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
     // Option 5: Merge Video Clips Only (no transformation)
     const videoClipPaths = [];
     const orientations = [];
+    const resolutions = [];
     for (let i = 0; i < mediaFiles.length; i++) {
       const file = mediaFiles[i];
       const ext = path.extname(file.originalname).toLowerCase();
       if (ext !== '.mp4') continue;
       // Use absolute path for ffmpeg concat
-      videoClipPaths.push(path.resolve(file.path));
+      const absPath = path.resolve(file.path);
 
-      // Get orientation for each video
+      // Get orientation and resolution for each video
       let isPortrait = false;
+      let width = 0, height = 0;
       try {
         const metadata = await new Promise((resolve, reject) => {
           ffmpeg.ffprobe(file.path, (err, data) => {
@@ -231,13 +233,18 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
         });
         const stream = metadata.streams.find(s => s.codec_type === 'video');
         if (stream && stream.width && stream.height) {
-          isPortrait = stream.height > stream.width;
+          width = stream.width;
+          height = stream.height;
+          isPortrait = height > width;
+          resolutions.push(`${width}x${height}`);
         }
       } catch (e) {
         // If ffprobe fails, fallback to landscape
         isPortrait = false;
+        resolutions.push('unknown');
       }
       orientations.push(isPortrait ? 'portrait' : 'landscape');
+      videoClipPaths.push(absPath);
     }
 
     if (videoClipPaths.length < 2) {
@@ -257,12 +264,51 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       });
     }
 
-    // If exactly two clips, use the Python script for robust merging
-    if (videoClipPaths.length === 2) {
-      await mergeVideos(videoClipPaths, finalVideoPath);
-    } else {
-      // For more than 2 clips, re-encode and merge using concat filter
-      await mergeVideos(videoClipPaths, finalVideoPath);
+    // Re-encode all videos to matching resolution if needed
+    let reencodedPaths = [];
+    if (allPortrait) {
+      // Portrait: re-encode all to 1080x1920
+      for (let i = 0; i < videoClipPaths.length; i++) {
+        const inputPath = videoClipPaths[i];
+        const outputPath = path.join(tempDir, `portrait_reencoded_${i}.mp4`);
+        await new Promise((resolve, reject) => {
+          ffmpeg()
+            .input(inputPath)
+            .videoCodec('libx264')
+            .audioCodec('aac')
+            .outputOptions(['-vf', 'scale=1080:1920', '-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+            .output(outputPath)
+            .on('end', resolve)
+            .on('error', reject)
+            .run();
+        });
+        reencodedPaths.push(outputPath);
+      }
+    } else if (allLandscape) {
+      // Landscape: re-encode all to 1920x1080
+      for (let i = 0; i < videoClipPaths.length; i++) {
+        const inputPath = videoClipPaths[i];
+        const outputPath = path.join(tempDir, `landscape_reencoded_${i}.mp4`);
+        await new Promise((resolve, reject) => {
+          ffmpeg()
+            .input(inputPath)
+            .videoCodec('libx264')
+            .audioCodec('aac')
+            .outputOptions(['-vf', 'scale=1920:1080', '-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+            .output(outputPath)
+            .on('end', resolve)
+            .on('error', reject)
+            .run();
+        });
+        reencodedPaths.push(outputPath);
+      }
+    }
+
+    // Merge re-encoded videos
+    if (reencodedPaths.length === 2) {
+      await mergeVideos(reencodedPaths, finalVideoPath);
+    } else if (reencodedPaths.length > 2) {
+      await mergeVideos(reencodedPaths, finalVideoPath);
     }
   } else if (musicOption === 'transform_merge') {
     // Option 3: Transform & Merge Video Clips Only
@@ -576,11 +622,11 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
         ctx.drawImage(img, 0, 0, outW, outH);
         // Watermark text
         ctx.save();
-        ctx.font = `bold ${Math.floor(outH/18)}px Arial`;
+        ctx.font = `bold ${Math.floor(outH/28)}px Arial`;
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillText('SPP NEWS CPP', Math.floor(outW*0.05), Math.floor(outH/2));
+        ctx.fillText('SPP NEWS CHIPURUPALLI', Math.floor(outW*0.05), Math.floor(outH/2));
         ctx.restore();
         // Logo in top right
         const logoPath = path.join(__dirname, 'assets/transparent.png');
