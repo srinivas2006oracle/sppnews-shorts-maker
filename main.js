@@ -295,7 +295,20 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       if (orientation === 'portrait' && isPortrait) {
         portraitCount++;
         lastPortraitPath = file.path;
-        videoClipPaths.push(file.path);
+        // Re-encode portrait video to 1080x1920 before merging
+        const reencodedPath = path.join(tempDir, `portrait_reencoded_${i}.mp4`);
+        await new Promise((resolve, reject) => {
+          ffmpeg()
+            .input(file.path)
+            .videoCodec('libx264')
+            .audioCodec('aac')
+            .outputOptions(['-vf', 'scale=1080:1920', '-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+            .output(reencodedPath)
+            .on('end', resolve)
+            .on('error', reject)
+            .run();
+        });
+        videoClipPaths.push(reencodedPath);
       } else {
         // Otherwise, apply transformation
         const resizedVideo = await processVideoClip(file, tempDir, resolution, i);
