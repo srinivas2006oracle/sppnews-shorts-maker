@@ -536,64 +536,87 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       const videoOutput = path.join(tempDir, `clip_${i}.mp4`);
       const thisCaption = captionChunks[i];
       const [outW, outH] = resolution.split('x').map(Number);
-      const bannerPath = path.join(__dirname, 'assets/shorts-bottom-banner.png');
-      const bannerImg = await loadImage(bannerPath);
       const img = await loadImage(file.path);
       const canvas = createCanvas(outW, outH);
       const ctx = canvas.getContext('2d');
 
-      // Draw the image and text on the canvas
-      ctx.fillStyle = '#2d5072';
-      ctx.fillRect(0, 0, outW, outH);
-      const topH = Math.floor(outH / 3);
-      ctx.fillStyle = 'rgba(43, 84, 111, 0.92)';
-      ctx.fillRect(0, 0, outW, topH);
-      const fontSize = Math.floor((topH / 4.2) * 0.7 * 0.7);
-      ctx.font = `bold ${fontSize}px Arial`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = 'white';
-
-      const wrapTextLines = (text, maxWidth, maxLines) => {
-        const words = text.split(/\s+/);
-        const lines = [];
-        let line = '';
-        for (let i = 0; i < words.length; i++) {
-          const testLine = line ? line + ' ' + words[i] : words[i];
-          const metrics = ctx.measureText(testLine);
-          if (metrics.width > maxWidth && line) {
-            lines.push(line);
-            line = words[i];
-            if (lines.length === maxLines - 1) break;
-          } else {
-            line = testLine;
-          }
-        }
-        if (line && lines.length < maxLines) lines.push(line);
-        return lines;
-      };
-
-      const lines = wrapTextLines(thisCaption, outW * 0.95, 7);
-      for (let l = 0; l < lines.length; l++) {
-        ctx.fillText(lines[l], outW / 2, topH / 2 + (l - (lines.length - 1) / 2) * fontSize * 1.1);
-      }
-
-      const midY = topH;
-      const midH = Math.floor(outH / 3);
-      const imgRatio = img.width / img.height;
-      const midRatio = outW / midH;
-      let drawW, drawH;
-      if (imgRatio > midRatio) {
-        drawW = outW;
-        drawH = outW / imgRatio;
+      // Detect portrait image
+      const isPortraitImg = img.height > img.width;
+      if (orientation === 'portrait' && isPortraitImg && (musicOption === 'default' || musicOption === 'ai')) {
+        // Portrait image: watermark and logo only
+        ctx.drawImage(img, 0, 0, outW, outH);
+        // Watermark text
+        ctx.save();
+        ctx.font = `bold ${Math.floor(outH/18)}px Arial`;
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SPP NEWS CPP', Math.floor(outW*0.05), Math.floor(outH/2));
+        ctx.restore();
+        // Logo in top right
+        const logoPath = path.join(__dirname, 'assets/transparent.png');
+        try {
+          const logoImg = await loadImage(logoPath);
+          const logoW = Math.floor(outW/6);
+          const logoH = Math.floor(logoW * (logoImg.height/logoImg.width));
+          ctx.drawImage(logoImg, outW-logoW-10, 10, logoW, logoH);
+        } catch {}
       } else {
-        drawH = midH;
-        drawW = midH * imgRatio;
-      }
-      ctx.drawImage(img, (outW - drawW) / 2, midY + (midH - drawH) / 2, drawW, drawH);
+        // ...existing code for landscape transformation...
+        const bannerPath = path.join(__dirname, 'assets/shorts-bottom-banner.png');
+        const bannerImg = await loadImage(bannerPath);
+        ctx.fillStyle = '#2d5072';
+        ctx.fillRect(0, 0, outW, outH);
+        const topH = Math.floor(outH / 3);
+        ctx.fillStyle = 'rgba(43, 84, 111, 0.92)';
+        ctx.fillRect(0, 0, outW, topH);
+        const fontSize = Math.floor((topH / 4.2) * 0.7 * 0.7);
+        ctx.font = `bold ${fontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'white';
 
-      const bannerH = outH - (topH + midH);
-      ctx.drawImage(bannerImg, 0, outH - bannerH, outW, bannerH);
+        const wrapTextLines = (text, maxWidth, maxLines) => {
+          const words = text.split(/\s+/);
+          const lines = [];
+          let line = '';
+          for (let i = 0; i < words.length; i++) {
+            const testLine = line ? line + ' ' + words[i] : words[i];
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && line) {
+              lines.push(line);
+              line = words[i];
+              if (lines.length === maxLines - 1) break;
+            } else {
+              line = testLine;
+            }
+          }
+          if (line && lines.length < maxLines) lines.push(line);
+          return lines;
+        };
+
+        const lines = wrapTextLines(thisCaption, outW * 0.95, 7);
+        for (let l = 0; l < lines.length; l++) {
+          ctx.fillText(lines[l], outW / 2, topH / 2 + (l - (lines.length - 1) / 2) * fontSize * 1.1);
+        }
+
+        const midY = topH;
+        const midH = Math.floor(outH / 3);
+        const imgRatio = img.width / img.height;
+        const midRatio = outW / midH;
+        let drawW, drawH;
+        if (imgRatio > midRatio) {
+          drawW = outW;
+          drawH = outW / imgRatio;
+        } else {
+          drawH = midH;
+          drawW = midH * imgRatio;
+        }
+        ctx.drawImage(img, (outW - drawW) / 2, midY + (midH - drawH) / 2, drawW, drawH);
+
+        const bannerH = outH - (topH + midH);
+        ctx.drawImage(bannerImg, 0, outH - bannerH, outW, bannerH);
+      }
 
       const out = fs.createWriteStream(baseOutput);
       await new Promise((resolve, reject) => {
