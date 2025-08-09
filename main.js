@@ -112,7 +112,7 @@ async function mergeVideos(videoPaths, outputPath) {
 // Function to generate AI audio using Python script
 function generateAIAudio(text, outputPath) {
   return new Promise((resolve, reject) => {
-    const command = `python generate_audio.py "${text}" "${outputPath}"`;
+    const command = `/home/quizchampindia-shorts/htdocs/shorts.quizchampindia.in/bin/python generate_audio.py "${text}" "${outputPath}"`;
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error generating AI audio: ${error}`);
