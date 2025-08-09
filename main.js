@@ -519,7 +519,7 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
     if (musicOption === 'ai') {
       audioPath = path.join(tempDir, 'ai-bg-music.mp3');
       // Remove only *, _, - from the caption for AI audio
-      const sanitizedCaption = caption.replace(/[\*_\-]/g, '');
+      const sanitizedCaption = caption.replace(/[\*_\-\"]/g, '');
       await generateAIAudio(sanitizedCaption, audioPath);
       // Get the duration of the AI audio
       audioDuration = await getAudioDuration(audioPath);
