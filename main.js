@@ -834,5 +834,5 @@ app.get('/video/:name', (req, res) => {
   else res.status(404).send('Video not found.');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 50516;
 app.listen(PORT, '0.0.0.0', () => console.log(`Server running at http://localhost:${PORT}`));
