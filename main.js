@@ -2,10 +2,14 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage, registerFont } = require('canvas');
 const ffmpeg = require('fluent-ffmpeg');
 const { exec } = require('child_process');
 const app = express();
+require('dotenv').config();
+
+// Register the Telugu font
+registerFont(path.join(__dirname, 'assets', 'default-telugu-font.ttf'), { family: 'TeluguFont' });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -112,7 +116,23 @@ async function mergeVideos(videoPaths, outputPath) {
 // Function to generate AI audio using Python script
 function generateAIAudio(text, outputPath) {
   return new Promise((resolve, reject) => {
-    const command = `/home/quizchampindia-shorts/htdocs/shorts.quizchampindia.in/bin/python generate_audio.py "${text}" "${outputPath}"`;
+    let command;
+
+    if (process.env.NODE_ENV === 'production') {
+      command = `/home/quizchampindia-shorts/htdocs/shorts.quizchampindia.in/bin/python generate_audio.py "${text}" "${outputPath}"`;
+    } else {
+      command = `python generate_audio.py "${text}" "${outputPath}"`;
+    }
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error generating AI audio: ${error}`);
+        reject(error);
+      } else {
+        console.log(`AI audio generated successfully: ${stdout}`);
+        resolve(outputPath);
+      }
+    });
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error generating AI audio: ${error}`);
@@ -427,7 +447,7 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
             .input(inputPath)
             .videoCodec('libx264')
             .audioCodec('aac')
-            .outputOptions(['-vf', 'scale=1080:1920','-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
+            .outputOptions(['-vf', 'scale=1080:1920', '-pix_fmt', 'yuv420p', '-preset', 'fast', '-y'])
             .on('end', resolve)
             .on('error', reject)
             .save(outputPath);
@@ -622,20 +642,20 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
         ctx.drawImage(img, 0, 0, outW, outH);
         // Watermark text
         ctx.save();
-        ctx.font = `bold ${Math.floor(outH/28)}px Arial`;
+        ctx.font = `bold ${Math.floor(outH / 28)}px Arial`;
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillText('SPP NEWS CHIPURUPALLI', Math.floor(outW*0.05), Math.floor(outH/2));
+        ctx.fillText('SPP NEWS CHIPURUPALLI', Math.floor(outW * 0.05), Math.floor(outH / 2));
         ctx.restore();
         // Logo in top right
         const logoPath = path.join(__dirname, 'assets/transparent.png');
         try {
           const logoImg = await loadImage(logoPath);
-          const logoW = Math.floor(outW/6);
-          const logoH = Math.floor(logoW * (logoImg.height/logoImg.width));
-          ctx.drawImage(logoImg, outW-logoW-10, 10, logoW, logoH);
-        } catch {}
+          const logoW = Math.floor(outW / 6);
+          const logoH = Math.floor(logoW * (logoImg.height / logoImg.width));
+          ctx.drawImage(logoImg, outW - logoW - 10, 10, logoW, logoH);
+        } catch { }
       } else {
         // ...existing code for landscape transformation...
         const bannerPath = path.join(__dirname, 'assets/shorts-bottom-banner.png');
@@ -646,7 +666,7 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
         ctx.fillStyle = 'rgba(43, 84, 111, 0.92)';
         ctx.fillRect(0, 0, outW, topH);
         const fontSize = Math.floor((topH / 4.2) * 0.7 * 0.7);
-        ctx.font = `bold ${fontSize}px Arial`;
+        ctx.font = `bold ${fontSize}px TeluguFont`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = 'white';
@@ -765,9 +785,9 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
         .output(finalVideoPath)
         .on('end', () => {
           // Clean up temp files
-          try { fs.unlinkSync(silentVideoPath); } catch {}
+          try { fs.unlinkSync(silentVideoPath); } catch { }
           if (videoForAudio !== silentVideoPath) {
-            try { fs.unlinkSync(videoForAudio); } catch {}
+            try { fs.unlinkSync(videoForAudio); } catch { }
           }
           resolve();
         })
