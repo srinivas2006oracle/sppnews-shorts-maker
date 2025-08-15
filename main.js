@@ -24,7 +24,7 @@ const upload = multer({
     const ext = path.extname(file.originalname).toLowerCase();
     cb(null, allowedExts.includes(ext));
   },
-  limits: { files: 10 }
+  limits: { files: 20 } // Increased limit from 10 to 20
 });
 
 app.get('/', (req, res) => {
@@ -179,7 +179,7 @@ async function processVideoClip(file, tempDir, resolution, index) {
   });
 }
 
-app.post('/upload', upload.array('media', 10), async (req, res) => {
+app.post('/upload', upload.array('media', 20), async (req, res) => {
   const title = (req.body.title || '').trim();
   const caption = req.body.caption || '';
   const orientation = req.body.orientation || 'portrait';
@@ -561,9 +561,11 @@ app.post('/upload', upload.array('media', 10), async (req, res) => {
       // Filter only image files
       const imageFiles = mediaFiles.filter(f => ['.jpg', '.jpeg', '.png', '.webp'].includes(path.extname(f.originalname).toLowerCase()));
       const numImages = imageFiles.length;
-      // Use default chunking logic (18 words per chunk), but if more images than chunks, split caption into numImages chunks
-      const words = caption.split(/\s+/).filter(Boolean);
+      // Use sanitized caption for chunking
+      const sanitizedCaption = caption.replace(/[\*_\-"]/g, '');
+      const words = sanitizedCaption.split(/\s+/).filter(Boolean);
       let numChunks, wordsPerChunk;
+      let captionChunks = [];
       if (numImages > 0) {
         // First, try 18 words per chunk
         wordsPerChunk = 18;

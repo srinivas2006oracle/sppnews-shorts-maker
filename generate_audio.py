@@ -23,5 +23,3 @@ if __name__ == "__main__":
 
     generate_audio(text, temp_path)
     increase_audio_speed(temp_path, output_path, speed=1.3)
-
-    os.remove(temp_path)
