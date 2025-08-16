@@ -561,11 +561,10 @@ app.post('/upload', upload.array('media', 20), async (req, res) => {
       // Filter only image files
       const imageFiles = mediaFiles.filter(f => ['.jpg', '.jpeg', '.png', '.webp'].includes(path.extname(f.originalname).toLowerCase()));
       const numImages = imageFiles.length;
-      // Use sanitized caption for chunking
-      const sanitizedCaption = caption.replace(/[\*_\-"]/g, '');
-      const words = sanitizedCaption.split(/\s+/).filter(Boolean);
+            // Use default chunking logic (18 words per chunk), but if more images than chunks, split caption into numImages chunks
+      const words = caption.split(/\s+/).filter(Boolean);
+
       let numChunks, wordsPerChunk;
-      let captionChunks = [];
       if (numImages > 0) {
         // First, try 18 words per chunk
         wordsPerChunk = 18;
