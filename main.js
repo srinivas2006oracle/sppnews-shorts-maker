@@ -622,7 +622,7 @@ app.post('/upload', upload.array('media', 20), async (req, res) => {
     const mediaCount = mediaFiles.length;
 
     for (let i = 0; i < captionChunks.length; i++) {
-      let imgIdx = i % mediaFiles.length;
+      let imgIdx = i % mediaCount;
       let file = mediaFiles[imgIdx];
       let ext = path.extname(file.originalname).toLowerCase();
       // Only process images (should always be true here)
@@ -638,82 +638,18 @@ app.post('/upload', upload.array('media', 20), async (req, res) => {
 
       // Detect portrait image
       const isPortraitImg = img.height > img.width;
-
-      if (orientation === 'landscape' && !isPortraitImg) {
-        // Landscape mode: ignore portrait images
-
-        // Fill background
-        ctx.fillStyle = '#2d5072';
-        ctx.fillRect(0, 0, outW, outH);
-
-        // Calculate 4/5 width and height
-        const imgW = Math.floor(outW * 0.8);
-        const imgH = Math.floor(outH * 0.8);
-
-        // Draw image in top-left 4/5 area
-        ctx.drawImage(img, 0, 0, imgW, imgH);
-
-        // Draw vertical banner in rightmost 1/5 width
-        const bannerPath = path.join(__dirname, 'assets/right-adv-banner.jpeg');
-        try {
-          const bannerImg = await loadImage(bannerPath);
-          ctx.drawImage(bannerImg, outW - Math.floor(outW * 0.2), 0, Math.floor(outW * 0.2), outH);
-        } catch { }
-
-        // Draw caption text in bottom 1/5 height, left 4/5 width
-        if (thisCaption) {
-          ctx.save();
-          ctx.font = `bold ${Math.floor(outH / 20)}px TeluguFont`;
-          ctx.fillStyle = 'white';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-
-          // Text area: bottom 1/5 height, left 4/5 width
-          const textAreaW = Math.floor(outW * 0.8);
-          const textAreaH = Math.floor(outH * 0.2);
-          const textAreaX = textAreaW / 2;
-          const textAreaY = outH - textAreaH / 2;
-
-          // Wrap text if needed
-          const wrapTextLines = (text, maxWidth, maxLines) => {
-            const words = text.split(/\s+/);
-            const lines = [];
-            let line = '';
-            for (let i = 0; i < words.length; i++) {
-              const testLine = line ? line + ' ' + words[i] : words[i];
-              const metrics = ctx.measureText(testLine);
-              if (metrics.width > maxWidth && line) {
-                lines.push(line);
-                line = words[i];
-                if (lines.length === maxLines - 1) break;
-              } else {
-                line = testLine;
-              }
-            }
-            if (line && lines.length < maxLines) lines.push(line);
-            return lines;
-          };
-
-          const lines = wrapTextLines(thisCaption, textAreaW * 0.95, 3);
-          for (let l = 0; l < lines.length; l++) {
-            ctx.fillText(
-              lines[l],
-              textAreaX,
-              textAreaY + (l - (lines.length - 1) / 2) * Math.floor(outH / 20) * 1.2
-            );
-          }
-          ctx.restore();
-        }
-      } else if (orientation === 'portrait' && isPortraitImg && (musicOption === 'default' || musicOption === 'ai')) {
-        // Portrait image: watermark and logo only (existing logic)
+      if (orientation === 'portrait' && isPortraitImg && (musicOption === 'default' || musicOption === 'ai')) {
+        // Portrait image: watermark and logo only
         ctx.drawImage(img, 0, 0, outW, outH);
+        // Watermark text
         ctx.save();
-        ctx.font = `bold ${Math.floor(outH / 28)}px TeluguFont`;
+        ctx.font = `bold ${Math.floor(outH / 28)}px Arial`;
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         ctx.fillText('SPP NEWS CHIPURUPALLI', Math.floor(outW * 0.05), Math.floor(outH / 2));
         ctx.restore();
+        // Logo in top right
         const logoPath = path.join(__dirname, 'assets/transparent.png');
         try {
           const logoImg = await loadImage(logoPath);
@@ -722,11 +658,62 @@ app.post('/upload', upload.array('media', 20), async (req, res) => {
           ctx.drawImage(logoImg, outW - logoW - 10, 10, logoW, logoH);
         } catch { }
       } else {
-        // Existing landscape transformation for other cases (if any)
-        // ...your previous code...
+        // ...existing code for landscape transformation...
+        const bannerPath = path.join(__dirname, 'assets/shorts-bottom-banner.png');
+        const bannerImg = await loadImage(bannerPath);
+        ctx.fillStyle = '#2d5072';
+        ctx.fillRect(0, 0, outW, outH);
+        const topH = Math.floor(outH / 3);
+        ctx.fillStyle = 'rgba(43, 84, 111, 0.92)';
+        ctx.fillRect(0, 0, outW, topH);
+        const fontSize = Math.floor((topH / 4.2) * 0.7 * 0.7);
+        ctx.font = `bold ${fontSize}px TeluguFont`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'white';
+
+        const wrapTextLines = (text, maxWidth, maxLines) => {
+          const words = text.split(/\s+/);
+          const lines = [];
+          let line = '';
+          for (let i = 0; i < words.length; i++) {
+            const testLine = line ? line + ' ' + words[i] : words[i];
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && line) {
+              lines.push(line);
+              line = words[i];
+              if (lines.length === maxLines - 1) break;
+            } else {
+              line = testLine;
+            }
+          }
+          if (line && lines.length < maxLines) lines.push(line);
+          return lines;
+        };
+
+        const lines = wrapTextLines(thisCaption, outW * 0.95, 7);
+        for (let l = 0; l < lines.length; l++) {
+          ctx.fillText(lines[l], outW / 2, topH / 2 + (l - (lines.length - 1) / 2) * fontSize * 1.1);
+        }
+
+        const midY = topH;
+        const midH = Math.floor(outH / 3);
+        const imgRatio = img.width / img.height;
+        const midRatio = outW / midH;
+        let drawW, drawH;
+        if (imgRatio > midRatio) {
+          drawW = outW;
+          drawH = outW / imgRatio;
+        } else {
+          drawH = midH;
+          drawW = midH * imgRatio;
+        }
+        ctx.drawImage(img, (outW - drawW) / 2, midY + (midH - drawH) / 2, drawW, drawH);
+
+        const bannerH = outH - (topH + midH);
+        ctx.drawImage(bannerImg, 0, outH - bannerH, outW, bannerH);
       }
 
-      // Save PNG and convert to video as before
       const out = fs.createWriteStream(baseOutput);
       await new Promise((resolve, reject) => {
         const stream = canvas.createPNGStream();
